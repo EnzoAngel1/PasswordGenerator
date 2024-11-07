@@ -47,6 +47,7 @@
             // En cas d'erreur dans la génération du mot de passe, affiche le message d'erreur
             echo $e->getMessage();
         }
+
     }
     ?>
 </body>
