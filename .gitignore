@@ -1,0 +1,2 @@
+# Ignore le dossier vendor (dépendances installées par Composer)
+vendor/
