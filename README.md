@@ -21,7 +21,7 @@ Ce projet est une application PHP simple permettant de générer des mots de pas
 1. **Cloner le dépôt** :
 
     ```bash
-    git clone https://github.com/EnzoAngel1/PasswordGenerator.git
+    git clone https://github.com/votre-utilisateur/nom-du-repo.git
     cd nom-du-repo
     ```
 
@@ -31,14 +31,12 @@ Ce projet est une application PHP simple permettant de générer des mots de pas
     composer install
     ```
 
-3. **Démarrer un serveur local PHP** :
-
-    ```bash
-    php -S localhost:8000
-    ```
+3. **Démarrer le serveur local avec XAMPP** :
+   - Placez votre projet dans le dossier `htdocs` de XAMPP (par exemple : `C:\xampp\htdocs\nom-du-repo`).
+   - Ouvrez le tableau de bord XAMPP et démarrez le serveur **Apache**.
 
 4. **Accéder à l’application** :
-   Ouvrez votre navigateur et allez à `http://localhost:8000` pour utiliser le générateur de mots de passe.
+   - Ouvrez votre navigateur et allez à `http://localhost/nom-du-repo` pour utiliser le générateur de mots de passe.
 
 ## 📝 Utilisation
 
