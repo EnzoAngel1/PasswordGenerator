@@ -2,53 +2,48 @@
 <html lang="fr">
 
 <head>
-    <!-- Configuration de la langue du document et de l'encodage des caractères pour le HTML -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Titre de la page affiché dans l'onglet du navigateur -->
-    <title>Générateur de mots de passe</title>
+    <title>Générateur de Mot de Passe</title>
 </head>
 
 <body>
-    <!-- Lien pour accéder à la page de vérification de mots de passe -->
-    <a href="./vues/verif.php">verif</a>
-
-    <!-- Titre principal de la page -->
-    <h1>Générer Votre mot de passe :</h1>
-
-    <!-- Formulaire permettant à l'utilisateur de générer un mot de passe en spécifiant sa longueur -->
-    <form action="./index.php" method="post">
-        <!-- Etiquette pour le champ de longueur du mot de passe -->
+    <h1>Générateur de Mot de Passe</h1>
+    <a href="./vues/verif.php">Vers la vérification de mdp</a>
+    <form method="POST" action="./index.php">
         <label for="length">Longueur du mot de passe :</label>
-        <!-- Champ numérique pour spécifier la longueur, avec une valeur par défaut de 12, 
-             et une limite de saisie obligatoire définie par "required" -->
-        <input type="number" id="length" name="length" value="12" required>
-        <!-- Bouton pour soumettre le formulaire et générer le mot de passe -->
+        <input type="number" id="length" name="length" value="12" min="4" required>
+
+        <p>Types de caractères à inclure :</p>
+        <input type="checkbox" name="characters[]" value="upper" checked> Majuscules<br>
+        <input type="checkbox" name="characters[]" value="lower" checked> Minuscules<br>
+        <input type="checkbox" name="characters[]" value="numbers" checked> Chiffres<br>
+        <input type="checkbox" name="characters[]" value="special" checked> Caractères spéciaux<br>
+
         <button type="submit">Générer</button>
     </form>
 
     <?php
-    // Inclusion du fichier autoload de Composer pour charger automatiquement les classes nécessaires
+    // Inclure la classe PasswordGenerator
     require_once __DIR__ . '/vendor/autoload.php';
 
-    // Import de la classe PasswordGenerator depuis l'espace de noms Enzo\Dev
     use Enzo\Dev\PasswordGenerator;
 
-    // Vérifie si le champ "length" est défini dans $_POST pour confirmer que le formulaire a été soumis
-    if (isset($_POST['length'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Récupération de la longueur et des caractères sélectionnés
+        $length = isset($_POST['length']) ? (int)$_POST['length'] : 12;
+        $characterTypes = isset($_POST['characters']) ? $_POST['characters'] : [];
+
+        // Vérification que l'utilisateur a sélectionné au moins un type de caractère
+
         try {
-            // Appelle la fonction generatePassword de la classe PasswordGenerator,
-            // en utilisant la valeur fournie dans le champ "length" pour définir la longueur du mot de passe
-            $Password = PasswordGenerator::generatePassword($_POST['length']);
-
-            // Affiche le mot de passe généré à l'utilisateur
-            echo $Password;
-        } catch (\Exception $e) {
-            // En cas d'erreur dans la génération du mot de passe, affiche le message d'erreur
-            echo $e->getMessage();
+            // Génération du mot de passe avec les options choisies
+            $password = PasswordGenerator::generatePassword($length, $characterTypes);
+            echo "<p>Mot de passe généré : <strong>$password</strong></p>";
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Erreur : " . $e->getMessage() . "</p>";
         }
-
     }
     ?>
 </body>
+
 </html>
